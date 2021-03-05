@@ -1,12 +1,10 @@
 import React from "react";
-import { Jumbotron } from "react-bootstrap";
 import Layout from "../../components/Layout/Layout";
 
 const Home = () => {
   return (
-    <div>
-      <Layout>
-        <Jumbotron
+    <Layout sidebar>
+      {/* <Jumbotron
           className="text-center"
           style={{ margin: "5rem", backgroundColor: "whitesmoke" }}
         >
@@ -18,9 +16,8 @@ const Home = () => {
             asperiores, et perspiciatis. Aliquid esse obcaecati, mollitia beatae
             repellendus ullam!
           </p>
-        </Jumbotron>
-      </Layout>
-    </div>
+        </Jumbotron> */}
+    </Layout>
   );
 };
 

@@ -5,12 +5,14 @@ import "./index.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./store";
+import { BrowserRouter as Router } from "react-router-dom";
 
 window.store = store;
-
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById("root")
 );

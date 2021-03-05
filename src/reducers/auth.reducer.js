@@ -29,7 +29,12 @@ export default (state = initialState, action) => {
         authenticating: false,
       };
       break;
+    case authConstants.LOGIN_REQUEST:
+      state = {
+        ...initialState,
+      };
+      break;
   }
-  console.log(action);
+
   return state;
 };

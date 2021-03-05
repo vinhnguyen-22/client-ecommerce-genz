@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { isUserLoggedIn, login } from "../../actions/index";
-import Layout from "../../components/Layout/Layout";
-import Input from "../../components/Ui/Input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
+import { login } from "../../actions/index";
+import Layout from "../../components/Layout/Layout";
+import Input from "../../components/Ui/Input/Input";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -13,12 +13,6 @@ const Signin = () => {
   const auth = useSelector((state) => state.auth);
 
   const dispatch = useDispatch((state) => state.auth);
-
-  useEffect(() => {
-    if (!auth.authenticate) {
-      dispatch(isUserLoggedIn);
-    }
-  }, []);
 
   const userLogin = (e) => {
     e.preventDefault();
@@ -35,7 +29,7 @@ const Signin = () => {
   return (
     <Layout>
       <Container>
-        <Row className="mt-5">
+        <Row style={{ marginTop: "70px" }}>
           <Col md={{ span: 6, offset: 3 }}>
             <Form onSubmit={userLogin}>
               <Input
