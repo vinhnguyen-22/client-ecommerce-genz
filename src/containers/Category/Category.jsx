@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory, getAllCategory } from "../../actions";
+import { addCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/Input/Input";
 
@@ -10,25 +10,25 @@ const Category = () => {
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
-  const [categoyName, setCategoryName] = useState("");
-  const [parentCategoyId, setParentCategoryId] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
-
-  useEffect(() => {
-    dispatch(getAllCategory());
-  }, []);
 
   const handleClose = () => {
     const form = new FormData();
-    form.append("name", categoyName);
-    form.append("parentId", parentCategoyId);
+    form.append("name", categoryName);
+    form.append("parentId", parentCategoryId);
     form.append("categoryImage", categoryImage);
 
     dispatch(addCategory(form));
 
+    setCategoryName("");
+    setCategoryImage("");
+    setParentCategoryId("");
+
     const cat = {
-      categoyName,
-      parentCategoyId,
+      categoryName,
+      parentCategoryId,
       categoryImage,
     };
     console.log(cat);
@@ -94,14 +94,14 @@ const Category = () => {
         </Modal.Header>
         <Modal.Body>
           <Input
-            value={categoyName}
+            value={categoryName}
             placeholder={"Category Name"}
             onChange={(e) => setCategoryName(e.target.value)}
           />
 
           <select
             className="form-control"
-            value={parentCategoyId}
+            value={parentCategoryId}
             onChange={(e) => setParentCategoryId(e.target.value)}
           >
             <option>Select Category</option>
