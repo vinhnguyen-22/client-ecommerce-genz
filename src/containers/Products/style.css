@@ -1,0 +1,23 @@
+.key {
+  font-size: 14;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.info {
+  font-size: 14;
+  font-family: sans-serif;
+}
+
+.product-img-container {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.product-img-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
