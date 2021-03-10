@@ -1,5 +1,9 @@
 import React from "react";
+import axiosIntance from "../helper/axios";
 
-export default function () {
-  return <div></div>;
-}
+export const addProduct = (form) => {
+  return async (dispatch) => {
+    const res = await axiosIntance.post("product/create", form);
+    console.log(res);
+  };
+};

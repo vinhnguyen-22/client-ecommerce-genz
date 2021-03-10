@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/Input/Input";
+import Modal from "../../components/Ui/Modal/Modal";
 
 const Category = () => {
   const category = useSelector((state) => state.category);
@@ -87,43 +88,35 @@ const Category = () => {
           </Col>
         </Row>
       </Container>
+      <Modal
+        show={show}
+        handleClose={handleClose}
+        modalTitle={"Add new category"}
+      >
+        <Input
+          value={categoryName}
+          placeholder={"Category Name"}
+          onChange={(e) => setCategoryName(e.target.value)}
+        />
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            value={categoryName}
-            placeholder={"Category Name"}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
+        <select
+          className="form-control"
+          value={parentCategoryId}
+          onChange={(e) => setParentCategoryId(e.target.value)}
+        >
+          <option>Select Category</option>
+          {createCategoryList(category.categories).map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
 
-          <select
-            className="form-control"
-            value={parentCategoryId}
-            onChange={(e) => setParentCategoryId(e.target.value)}
-          >
-            <option>Select Category</option>
-            {createCategoryList(category.categories).map((option) => (
-              <option value={option.value} key={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-
-          <Input
-            type="file"
-            onChange={handleCategoryImage}
-            className="form-control-file mt-3"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Save Changes</Button>
-        </Modal.Footer>
+        <Input
+          type="file"
+          onChange={handleCategoryImage}
+          className="form-control-file mt-3"
+        />
       </Modal>
     </Layout>
   );

@@ -1,5 +1,23 @@
 import React from "react";
+import { productConstants } from "../actions/constants";
 
-export default function () {
-  return <div></div>;
-}
+const initialState = {
+  products: [],
+};
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case productConstants.GET_ALL_PRODUCTS_SUCCESS:
+      state = {
+        ...state,
+        products: action.payload.products,
+      };
+      break;
+    case productConstants.GET_ALL_PRODUCTS_SUCCESS:
+      state = {
+        ...state,
+        products: action.payload.products,
+      };
+      break;
+  }
+  return state;
+};
