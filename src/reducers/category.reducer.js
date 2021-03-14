@@ -73,7 +73,6 @@ export default (state = initState, action) => {
         state.categories,
         category
       );
-      console.log("updated categoires", updatedCategories);
 
       state = {
         ...state,

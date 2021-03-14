@@ -19,8 +19,8 @@ const App = () => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getInitialData());
     dispatch(getAllCategory());
+    dispatch(getInitialData());
   }, []);
 
   return (
