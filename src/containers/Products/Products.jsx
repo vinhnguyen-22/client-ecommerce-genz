@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../../actions";
+import { addProduct, getInitialData } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/Input/Input";
 import Modal from "../../components/Ui/Modal/Modal";
@@ -43,7 +43,11 @@ const Products = () => {
       form.append("productPictures", pic);
     }
 
-    dispatch(addProduct(form));
+    dispatch(addProduct(form)).then((result) => {
+      if (result) {
+        dispatch(getInitialData());
+      }
+    });
     setShow(false);
   };
 
