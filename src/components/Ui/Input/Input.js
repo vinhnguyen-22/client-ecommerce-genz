@@ -30,6 +30,21 @@ const Input = (props) => {
         </Form.Group>
       );
       break;
+
+    case "file":
+      input = (
+        <Form.Group>
+          <Form.File
+            id="custom-file-translate-scss"
+            label="Custom file input"
+            lang="en"
+            custom
+            onChange={props.onChange}
+            {...props}
+          />
+        </Form.Group>
+      );
+      break;
     case "text":
     default:
       input = (
@@ -42,6 +57,7 @@ const Input = (props) => {
             onChange={props.onChange}
             {...props}
           />
+          {}
           <Form.Text className="text-muted">{props.errorMessage}</Form.Text>
         </Form.Group>
       );
