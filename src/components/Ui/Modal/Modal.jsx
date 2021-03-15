@@ -9,9 +9,17 @@ const newModal = (props) => {
       </Modal.Header>
       <Modal.Body>{props.children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={props.handleClose}>
-          Save Changes
-        </Button>
+        {props.buttons ? (
+          props.buttons.map((btn, index) => (
+            <Button variant={btn.color} key={index} onClick={btn.onClick}>
+              {btn.label}
+            </Button>
+          ))
+        ) : (
+          <Button variant="primary" onClick={props.handleClose}>
+            Save Changes
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );
