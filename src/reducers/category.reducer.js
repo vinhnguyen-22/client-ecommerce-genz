@@ -87,6 +87,24 @@ export default (state = initState, action) => {
         error: { error: action.payload.error },
       };
       break;
+    case categoryConstants.UPDATE_CATEGORIES_REQUEST:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case categoryConstants.UPDATE_CATEGORIES_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+      };
+      break;
+    case categoryConstants.UPDATE_CATEGORIES_FAILURE:
+      state = {
+        ...state,
+        loading: false,
+      };
+      break;
   }
   return state;
 };
