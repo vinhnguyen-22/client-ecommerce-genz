@@ -25,6 +25,7 @@
   font-size: 16px;
   background-color: var(--dark);
   color: var(--light);
+  width: 100px;
 }
 .action-btn-container > button:hover {
   background-color: var(--warning);

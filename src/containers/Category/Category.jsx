@@ -56,13 +56,6 @@ const Category = () => {
     setCategoryImage("");
     setParentCategoryId("");
 
-    const cat = {
-      categoryName,
-      parentCategoryId,
-      categoryImage,
-    };
-    console.log(cat);
-
     setShow(false);
   };
 
@@ -284,6 +277,7 @@ const Category = () => {
         categoryName={categoryName}
         setCategoryName={setCategoryName}
         setParentCategoryId={setParentCategoryId}
+        categoryImage={categoryImage}
       />
       {/* TODO UPDATE */}
       <UpdateCategoriesModal

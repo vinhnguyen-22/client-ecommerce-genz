@@ -14,8 +14,8 @@ const AddCategoryModal = (props) => {
     setCategoryName,
     parentCategoryId,
     setParentCategoryId,
+    categoryImage,
   } = props;
-
   return (
     <Modal show={show} handleClose={handleClose} modalTitle={modalTitle}>
       <Row>
@@ -48,8 +48,10 @@ const AddCategoryModal = (props) => {
         <Col>
           <Input
             type="file"
+            label={categoryImage ? categoryImage.name : "Choose photo"}
             onChange={handleCategoryImage}
             className="form-control-file  mt-3"
+            id="myInput"
           />
         </Col>
       </Row>

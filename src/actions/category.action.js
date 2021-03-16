@@ -37,7 +37,9 @@ export const addCategory = (form) => {
           payload: res.data.error,
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 };
 

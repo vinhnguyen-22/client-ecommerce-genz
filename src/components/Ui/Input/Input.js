@@ -36,7 +36,7 @@ const Input = (props) => {
         <Form.Group>
           <Form.File
             id="custom-file-translate-scss"
-            label="Custom file input"
+            label={props.label}
             lang="en"
             custom
             onChange={props.onChange}
