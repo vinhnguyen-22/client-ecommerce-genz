@@ -14,6 +14,7 @@ const UpdateCategoriesModal = (props) => {
     handleCategoryInput,
     categoryList,
   } = props;
+  console.log({ expandedArray, checkedArray });
   return (
     <Modal
       show={show}
@@ -68,7 +69,18 @@ const UpdateCategoriesModal = (props) => {
               </Col>
 
               <Col>
-                <select name="" id="" className="form-control">
+                <select
+                  className="form-control"
+                  value={item.type}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "type",
+                      e.target.value,
+                      index,
+                      "expanded"
+                    )
+                  }
+                >
                   <option value="">Select Type</option>
                   <option value="store">Store</option>
                   <option value="product">Product</option>
@@ -123,8 +135,19 @@ const UpdateCategoriesModal = (props) => {
               </Col>
 
               <Col>
-                <select name="" id="" className="form-control">
-                  <option value="">Select Type</option>
+                <select
+                  value={item.type}
+                  onChange={(e) =>
+                    handleCategoryInput(
+                      "type",
+                      e.target.value,
+                      index,
+                      "checked"
+                    )
+                  }
+                  className="form-control"
+                >
+                  <option>Select Type</option>
                   <option value="store">Store</option>
                   <option value="product">Product</option>
                   <option value="page">Page</option>

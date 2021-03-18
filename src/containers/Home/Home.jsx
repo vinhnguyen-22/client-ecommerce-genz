@@ -17,6 +17,7 @@ const Home = () => {
             repellendus ullam!
           </p>
         </Jumbotron> */}
+      <h1>Home</h1>
     </Layout>
   );
 };
