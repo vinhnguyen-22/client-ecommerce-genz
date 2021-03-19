@@ -16,6 +16,7 @@ const NewPage = () => {
   const [desc, setDesc] = useState("");
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
+  const [type, setType] = useState("");
 
   const category = useSelector((state) => state.category);
 
@@ -27,10 +28,27 @@ const NewPage = () => {
 
   const handleBannerImages = (e) => {
     console.log(e);
+    setBanners([...banners, e.target.files[0]]);
   };
 
   const handleProductImages = (e) => {
     console.log(e);
+    setProducts([...products, e.target.files[0]]);
+  };
+
+  const submitPageForm = (e) => {
+    e.target.preventDefault();
+    const form = new FormData();
+
+    form.append("title", title);
+    form.append("description", desc);
+    form.append("category", categoryId);
+    form.append("type", type);
+  };
+
+  const onCategoryChange = (e) => {
+    categories.find((category) => category._id == e.target.value);
+    setCategoryId(e.target.value);
   };
 
   const renderCreatePageModal = () => {
@@ -46,7 +64,7 @@ const NewPage = () => {
               <select
                 className="form-control form-control-sm"
                 value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
+                onChange={onCategoryChange}
               >
                 <option value="">Select category</option>
                 {categories.map((cat) => (
@@ -91,6 +109,14 @@ const NewPage = () => {
             </Col>
           </Row>
 
+          {banners.length > 0
+            ? banners.map((banner, index) => (
+                <Row>
+                  <Col>{banner.name}</Col>
+                </Row>
+              ))
+            : null}
+
           <Row>
             <Col>
               <Input
@@ -101,6 +127,14 @@ const NewPage = () => {
               />
             </Col>
           </Row>
+
+          {products.length > 0
+            ? products.map((product, index) => (
+                <Row>
+                  <Col>{product.name}</Col>
+                </Row>
+              ))
+            : null}
         </Container>
       </Modal>
     );

@@ -32,7 +32,7 @@ axiosIntance.interceptors.response.use(
     console.log(error.response);
     const { status } = error.response;
     if (status === 500) {
-      store.dispatch({ type: authConstants.Lo });
+      store.dispatch({ type: authConstants.LOGOUT_REQUEST });
     }
     return Promise.reject(error);
   }
