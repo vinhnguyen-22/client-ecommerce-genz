@@ -2,7 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createPage } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Input from "../../components/Ui/Input/Input";
 import Modal from "../../components/Ui/Modal/Modal";
@@ -19,6 +20,7 @@ const NewPage = () => {
   const [type, setType] = useState("");
 
   const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setCategories(linearCategories(category.categories));
@@ -27,28 +29,42 @@ const NewPage = () => {
   //Ly do ta phai co dependency la vi getInitialstate la mot asynchronous so before that it's executed all of these thing got executed that's why you're not getting the category so instead of using this use effect with an empty array
 
   const handleBannerImages = (e) => {
-    console.log(e);
     setBanners([...banners, e.target.files[0]]);
   };
 
   const handleProductImages = (e) => {
-    console.log(e);
     setProducts([...products, e.target.files[0]]);
   };
 
   const submitPageForm = (e) => {
-    e.target.preventDefault();
-    const form = new FormData();
+    if (title === "") {
+      alert("Title is required");
+      setCreateModal(false);
+      return;
+    }
 
+    const form = new FormData();
     form.append("title", title);
     form.append("description", desc);
     form.append("category", categoryId);
     form.append("type", type);
+    banners.forEach((banner, index) => {
+      form.append("banners", banner);
+    });
+    products.forEach((product, index) => {
+      form.append("products", product);
+    });
+    console.log({ title, desc, categoryId, type, banners, products });
+
+    dispatch(createPage(form));
+
+    setCreateModal(false);
   };
 
   const onCategoryChange = (e) => {
     categories.find((category) => category._id == e.target.value);
     setCategoryId(e.target.value);
+    setType(category.type);
   };
 
   const renderCreatePageModal = () => {
@@ -56,7 +72,7 @@ const NewPage = () => {
       <Modal
         show={createModal}
         modalTitle={"Create New Page"}
-        handleClose={() => setCreateModal(false)}
+        handleClose={submitPageForm}
       >
         <Container>
           <Row>
@@ -111,7 +127,7 @@ const NewPage = () => {
 
           {banners.length > 0
             ? banners.map((banner, index) => (
-                <Row>
+                <Row key={index}>
                   <Col>{banner.name}</Col>
                 </Row>
               ))
@@ -122,6 +138,7 @@ const NewPage = () => {
               <Input
                 type="file"
                 onChange={handleProductImages}
+                multiple
                 label={"Choose product image"}
                 className="form-control-file form-control-sm"
               />
@@ -130,7 +147,7 @@ const NewPage = () => {
 
           {products.length > 0
             ? products.map((product, index) => (
-                <Row>
+                <Row key={index}>
                   <Col>{product.name}</Col>
                 </Row>
               ))
