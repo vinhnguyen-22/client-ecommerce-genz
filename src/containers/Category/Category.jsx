@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
@@ -44,7 +44,17 @@ const Category = () => {
   //Delete category
   const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
+  useEffect(() => {
+    if (!category.loading) {
+      setShow(false);
+    }
+  }, [category.loading]);
+
   const handleClose = () => {
+    if (categoryName === " ") {
+      alert("Name is required");
+      return;
+    }
     const form = new FormData();
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
@@ -266,7 +276,8 @@ const Category = () => {
       <AddCategoryModal
         show={show}
         size="lg"
-        handleClose={handleClose}
+        handleClose={() => setShow(false)}
+        onSubmit={handleClose}
         modalTitle={"Add Category"}
         categoryList={createCategoryList(category.categories)}
         handleCategoryImage={handleCategoryImage}
@@ -280,7 +291,8 @@ const Category = () => {
       <UpdateCategoriesModal
         show={updateCategoryModal}
         size="lg"
-        handleClose={updateCategoriesForm}
+        handleClose={() => setUpdateCategoryModal(false)}
+        onSubmit={updateCategoriesForm}
         modalTitle={"Update Category"}
         expandedArray={expandedArray}
         checkedArray={checkedArray}

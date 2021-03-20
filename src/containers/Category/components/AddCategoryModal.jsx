@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import Input from "../../../components/Ui/Input/Input";
 import Modal from "../../../components/Ui/Modal/Modal";
 
@@ -15,9 +15,15 @@ const AddCategoryModal = (props) => {
     parentCategoryId,
     setParentCategoryId,
     categoryImage,
+    onSubmit,
   } = props;
   return (
-    <Modal show={show} handleClose={handleClose} modalTitle={modalTitle}>
+    <Modal
+      show={show}
+      onSubmit={onSubmit}
+      handleClose={handleClose}
+      modalTitle={modalTitle}
+    >
       <Row>
         <Col>
           <Input
@@ -35,6 +41,7 @@ const AddCategoryModal = (props) => {
             onChange={(e) => setParentCategoryId(e.target.value)}
           >
             <option>Select Category</option>
+
             {categoryList.map((option) => (
               <option value={option.value} key={option.value}>
                 {option.name}

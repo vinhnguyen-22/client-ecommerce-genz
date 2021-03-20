@@ -6,11 +6,11 @@ const linearCategories = (categories, options = []) => {
       parentId: category.parentId,
       type: category.type,
     });
-
     if (category.children.length > 0) {
       linearCategories(category.children, options);
     }
   }
+
   return options;
 };
 

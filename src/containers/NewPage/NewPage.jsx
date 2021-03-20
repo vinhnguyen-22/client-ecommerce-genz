@@ -1,42 +1,63 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { createPage } from "../../actions";
-import Layout from "../../components/Layout/Layout";
-import Input from "../../components/Ui/Input/Input";
-import Modal from "../../components/Ui/Modal/Modal";
+import React, { useState, useEffect } from "react";
+import Layout from "../../components/Layout/Layout.jsx";
+import { Container, Row, Col } from "react-bootstrap";
 import linearCategories from "../../helper/linearCategories";
+import { useSelector, useDispatch } from "react-redux";
+import { createPage } from "../../actions";
+import Input from "../../components/Ui/Input/Input.js";
+import Modal from "../../components/Ui/Modal/Modal.jsx";
+import Card from "../../components/Ui/Card/Card.jsx";
 
-const NewPage = () => {
+const NewPage = (props) => {
   const [createModal, setCreateModal] = useState(false);
   const [title, setTitle] = useState("");
+  const category = useSelector((state) => state.category);
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [desc, setDesc] = useState("");
+  const [type, setType] = useState("");
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
-  const [type, setType] = useState("");
-
-  const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
+  const page = useSelector((state) => state.page);
 
   useEffect(() => {
     setCategories(linearCategories(category.categories));
   }, [category]);
 
-  //Ly do ta phai co dependency la vi getInitialstate la mot asynchronous so before that it's executed all of these thing got executed that's why you're not getting the category so instead of using this use effect with an empty array
+  useEffect(() => {
+    console.log(page);
+    if (!page.loading) {
+      setCreateModal(false);
+      setTitle("");
+      setCategoryId("");
+      setDesc("");
+      setProducts([]);
+      setBanners([]);
+    }
+  }, [page]);
+
+  const onCategoryChange = (e) => {
+    const category = categories.find(
+      (category) => category.value == e.target.value
+    );
+    setCategoryId(e.target.value);
+    setType(category.type);
+  };
 
   const handleBannerImages = (e) => {
+    console.log(e);
     setBanners([...banners, e.target.files[0]]);
   };
 
   const handleProductImages = (e) => {
+    console.log(e);
     setProducts([...products, e.target.files[0]]);
   };
 
   const submitPageForm = (e) => {
+    //e.target.preventDefault();
+
     if (title === "") {
       alert("Title is required");
       setCreateModal(false);
@@ -54,17 +75,8 @@ const NewPage = () => {
     products.forEach((product, index) => {
       form.append("products", product);
     });
-    console.log({ title, desc, categoryId, type, banners, products });
 
     dispatch(createPage(form));
-
-    setCreateModal(false);
-  };
-
-  const onCategoryChange = (e) => {
-    categories.find((category) => category._id == e.target.value);
-    setCategoryId(e.target.value);
-    setType(category.type);
   };
 
   const renderCreatePageModal = () => {
@@ -72,23 +84,19 @@ const NewPage = () => {
       <Modal
         show={createModal}
         modalTitle={"Create New Page"}
-        handleClose={submitPageForm}
+        handleClose={() => setCreateModal(false)}
+        onSubmit={submitPageForm}
       >
         <Container>
           <Row>
             <Col>
-              <select
-                className="form-control form-control-sm"
+              <Input
+                type="select"
                 value={categoryId}
                 onChange={onCategoryChange}
-              >
-                <option value="">Select category</option>
-                {categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
+                options={categories}
+                placeholder={"Select Category"}
+              />
             </Col>
           </Row>
 
@@ -98,7 +106,7 @@ const NewPage = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder={"Page Title"}
-                className="form-control-sm mt-3"
+                className=""
               />
             </Col>
           </Row>
@@ -109,7 +117,7 @@ const NewPage = () => {
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 placeholder={"Page Desc"}
-                className="form-control-sm"
+                className=""
               />
             </Col>
           </Row>
@@ -117,41 +125,44 @@ const NewPage = () => {
           <Row>
             <Col>
               <Input
+                className="form-control"
                 type="file"
-                label="Choose banners image"
+                label="banners"
                 onChange={handleBannerImages}
-                className="form-control-file form-control-sm"
               />
             </Col>
           </Row>
-
-          {banners.length > 0
-            ? banners.map((banner, index) => (
-                <Row key={index}>
-                  <Col>{banner.name}</Col>
-                </Row>
-              ))
-            : null}
 
           <Row>
             <Col>
               <Input
+                className="form-control"
                 type="file"
+                label="products"
                 onChange={handleProductImages}
-                multiple
-                label={"Choose product image"}
-                className="form-control-file form-control-sm"
               />
             </Col>
           </Row>
 
-          {products.length > 0
-            ? products.map((product, index) => (
-                <Row key={index}>
-                  <Col>{product.name}</Col>
-                </Row>
-              ))
-            : null}
+          <Card type="list" title="banners">
+            {banners.length > 0
+              ? banners.map((banner, index) => (
+                  <Row key={index}>
+                    <Col>{banner.name}</Col>
+                  </Row>
+                ))
+              : null}
+          </Card>
+
+          <Card type="list" title="products">
+            {products.length > 0
+              ? products.map((product, index) => (
+                  <Row key={index}>
+                    <Col>{product.name}</Col>
+                  </Row>
+                ))
+              : null}
+          </Card>
         </Container>
       </Modal>
     );
@@ -159,10 +170,15 @@ const NewPage = () => {
 
   return (
     <Layout sidebar>
-      {renderCreatePageModal()}
-      <button onClick={() => setCreateModal(true)}>Create Page</button>
+      {page.loading ? (
+        <p>Creating Page...please wait</p>
+      ) : (
+        <>
+          {renderCreatePageModal()}
+          <button onClick={() => setCreateModal(true)}>Create Page</button>
+        </>
+      )}
     </Layout>
   );
 };
-
 export default NewPage;

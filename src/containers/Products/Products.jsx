@@ -3,6 +3,7 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, getInitialData } from "../../actions";
 import Layout from "../../components/Layout/Layout";
+import Card from "../../components/Ui/Card/Card";
 import Input from "../../components/Ui/Input/Input";
 import Modal from "../../components/Ui/Modal/Modal";
 import { generatePublicUrl } from "../../urlConfig";
@@ -155,12 +156,13 @@ const Products = () => {
             </option>
           ))}
         </select>
-
-        {productPictures.length > 0
-          ? productPictures.map((pic, index) => (
-              <div key={index}>{pic.name}</div>
-            ))
-          : null}
+        <Card title="Image" type="list">
+          {productPictures.length > 0
+            ? productPictures.map((pic, index) => (
+                <div key={index}>{pic.name}</div>
+              ))
+            : null}
+        </Card>
       </Modal>
     );
   };
