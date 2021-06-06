@@ -1,17 +1,23 @@
-import React from "react";
+import "./style.css";
+
+/**
+ * @author
+ * @function Card
+ **/
+
 const Card = (props) => {
-  let card = null;
-  switch (props.type) {
-    case "list":
-      card = (
-        <div className="card" title={props.title}>
-          <div className="card-title text-center ">List of {props.title}</div>
-          <ul className="list-group list-group-flush">{props.children}</ul>
+  return (
+    <div className="card" {...props}>
+      {(props.headerLeft || props.headerRight) && (
+        <div className="cardHeader">
+          {props.headerLeft && <div>{props.headerLeft}</div>}
+          {props.headerRight && props.headerRight}
         </div>
-      );
-      break;
-  }
-  return card;
+      )}
+
+      {props.children}
+    </div>
+  );
 };
 
 export default Card;

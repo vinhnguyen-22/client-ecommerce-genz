@@ -22,14 +22,16 @@ const newModal = (props) => {
             </Button>
           ))
         ) : (
-          <Button
-            variant="primary"
-            {...props}
-            className="btn-sm"
-            onClick={props.onSubmit}
-          >
-            Save Changes
-          </Button>
+          <>
+            <Button
+              variant="primary"
+              {...props}
+              className="btn-sm"
+              onClick={props.onSubmit}
+            >
+              Save Changes
+            </Button>
+          </>
         )}
       </Modal.Footer>
     </Modal>
