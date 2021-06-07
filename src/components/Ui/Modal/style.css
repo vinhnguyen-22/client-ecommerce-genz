@@ -1,0 +1,10 @@
+.modal-header button.close {
+  background-color: tomato;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+}

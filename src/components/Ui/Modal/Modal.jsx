@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container, Modal } from "react-bootstrap";
-
+import "./style.css";
 const newModal = (props) => {
   return (
     <Modal
@@ -10,7 +10,7 @@ const newModal = (props) => {
       size={props.size}
       onHide={props.handleClose}
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeLabel closeButton>
         <Modal.Title>{props.modalTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{props.children}</Modal.Body>

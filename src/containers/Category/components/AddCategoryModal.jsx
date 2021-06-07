@@ -36,7 +36,7 @@ const AddCategoryModal = (props) => {
 
         <Col>
           <select
-            className="form-control form-control"
+            className="form-control "
             value={parentCategoryId}
             onChange={(e) => setParentCategoryId(e.target.value)}
           >

@@ -1,6 +1,7 @@
 .orderTrack {
   width: 500px;
   display: flex;
+  display: flex;
 }
 .orderStatus {
   width: 33.33%;
@@ -11,6 +12,7 @@
 }
 .orderStatus.active {
   background: #26a541;
+  transition: all 2s;
 }
 .orderStatus:last-child {
   width: 0;
@@ -32,8 +34,9 @@
   flex-direction: column;
   justify-content: space-between;
   position: absolute;
-  top: -16px;
-  transform: translateX(-20%);
+  top: -25px;
+  transform: translateX(-10%);
+  width: 100px;
 }
 
 .title {
@@ -43,4 +46,35 @@
 .value {
   font-size: 12px;
   text-transform: capitalize;
+}
+.manageOrder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.manageOrder button {
+  outline-style: none;
+  border: 0px;
+  background-color: cornflowerblue;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  margin: 20px 20px;
+}
+.manageOrder button:hover {
+  background-color: coral;
+  transform: translateY(-10px) scale(1.1);
+}
+.manageOrder button:active {
+  background-color: antiquewhite;
+}
+
+.cardOrder {
+  display: flex;
+  justify-content: center;
+}
+.cardOrder .cardHeader {
+  color: white;
 }

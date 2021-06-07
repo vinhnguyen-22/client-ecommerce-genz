@@ -14,7 +14,7 @@ const Header = (props) => {
 
   const renderLoggedInLinks = () => {
     return (
-      <Nav>
+      <Nav className="mr-auto">
         <li className="nav-item" style={{ cursor: "pointer", color: "white" }}>
           <span className="nav-link" onClick={logout}>
             Signout
@@ -46,22 +46,19 @@ const Header = (props) => {
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark">
       <Container fluid>
         {/* <Navbar.Brand href="#home">Admin Dashboard</Navbar.Brand> */}
-        <Link to="/" className="navbar-brand">
-          Admin Dashboard
-        </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown> */}
-          </Nav>
-          {auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()}
-        </Navbar.Collapse>
+        <Navbar.Brand href="#home">
+          <Link to="/" className="navbar-brand">
+            Admin Dashboard
+          </Link>
+        </Navbar.Brand>
+
+        <div>
+          <Navbar.Collapse id="responsive-navbar-nav">
+            {auth.authenticate
+              ? renderLoggedInLinks()
+              : renderNonLoggedInLinks()}
+          </Navbar.Collapse>
+        </div>
       </Container>
     </Navbar>
   );

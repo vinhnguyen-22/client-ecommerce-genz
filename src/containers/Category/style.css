@@ -10,9 +10,6 @@
 .modal-footer {
   padding: 5px 15px;
 }
-.modal-header button.close {
-  color: #f8f9fa;
-}
 
 .action-btn-container {
   display: flex;
