@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, getInitialData } from "../../actions";
+import { addProduct, deleteProductById, getInitialData } from "../../actions";
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/Ui/Card/Card";
 import Input from "../../components/Ui/Input/Input";
@@ -26,6 +26,15 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
+    setShow(false);
+    setProductPictures("");
+  };
+
+  useEffect(() => {
+    console.log("update");
+  }, [product]);
+
+  const submitProductForm = () => {
     const form = new FormData();
     form.append("name", name);
     form.append("quantity", quantity);
@@ -73,7 +82,7 @@ const Products = () => {
 
   const renderProduct = () => {
     return (
-      <Table responsive="sm" style={{ fontSize: "12" }}>
+      <Table responsive="sm" style={{ fontSize: "12" }} hover>
         <thead>
           <tr>
             <th>#</th>
@@ -81,20 +90,43 @@ const Products = () => {
             <th>Price</th>
             <th>Quantity</th>
             <th>Category</th>
+            <th colSpan="2" style={{ textAlign: "center" }}>
+              control
+            </th>
           </tr>
         </thead>
         <tbody>
           {product.products.length > 0
-            ? product.products.map((product) => (
-                <tr
-                  key={product._id}
-                  onClick={() => showProductDetailsModal(product)}
-                >
-                  <td>1</td>
+            ? product.products.map((product, index) => (
+                <tr key={product._id}>
+                  <td>{index + 1}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
                   <td>{product.category.name}</td>
+                  <td>
+                    <button
+                      className="Button"
+                      style={{ backgroundColor: "cornflowerblue" }}
+                      onClick={() => showProductDetailsModal(product)}
+                    >
+                      Info
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="Button"
+                      style={{ background: "coral" }}
+                      onClick={() => {
+                        const payload = {
+                          productId: product._id,
+                        };
+                        dispatch(deleteProductById(payload));
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
             : null}
@@ -108,7 +140,8 @@ const Products = () => {
       <Modal
         show={show}
         handleClose={handleClose}
-        modalTitle={"Add new category"}
+        modalTitle={"Add new product"}
+        onSubmit={submitProductForm}
       >
         <Input
           label="Name"
@@ -141,8 +174,20 @@ const Products = () => {
           label="Pictures"
           type="file"
           onChange={handleProductPictures}
-          className="form-control-file "
+          className="form-control-file"
         />
+
+        <Card
+          title="Image"
+          type="list"
+          style={{ marginBottom: "20px", padding: "10px" }}
+        >
+          {productPictures.length > 0
+            ? productPictures.map((pic, index) => (
+                <div key={index}>{pic.name}</div>
+              ))
+            : null}
+        </Card>
 
         <select
           className="form-control"
@@ -156,13 +201,6 @@ const Products = () => {
             </option>
           ))}
         </select>
-        <Card title="Image" type="list">
-          {productPictures.length > 0
-            ? productPictures.map((pic, index) => (
-                <div key={index}>{pic.name}</div>
-              ))
-            : null}
-        </Card>
       </Modal>
     );
   };
@@ -240,7 +278,13 @@ const Products = () => {
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Product</h3>
-              <button onClick={handleShow}>Add</button>
+              <button
+                onClick={handleShow}
+                className="Button"
+                style={{ backgroundColor: "#555" }}
+              >
+                Add
+              </button>
             </div>
           </Col>
         </Row>

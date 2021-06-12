@@ -21,3 +21,16 @@
   max-height: 100%;
   object-fit: contain;
 }
+
+.Button {
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  font-weight: bold;
+}
+.form-control-file {
+  margin: 10px 0px;
+}

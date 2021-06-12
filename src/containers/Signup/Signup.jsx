@@ -16,20 +16,24 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   if (!user.loading) {
-  //     setFirstName("");
-  //     setLastName("");
-  //     setEmail("");
-  //     setPassword("");
-  //   }
-  // }, [user.loading]);
+  useEffect(() => {
+    if (!user.loading) {
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+    }
+  }, [user.loading]);
 
   const userSignup = (e) => {
     e.preventDefault();
-    const user = { firstName, lastName, email, password };
 
-    console.log(user);
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
 
     dispatch(signup(user));
   };
